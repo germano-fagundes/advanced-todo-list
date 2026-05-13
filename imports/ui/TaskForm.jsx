@@ -3,31 +3,43 @@ import { useState } from "react";
 import { useTracker } from "meteor/react-meteor-data";
 import { TasksCollection } from "../api/TasksCollection";
 import DeleteIcon from "@mui/icons-material/Delete";
-import FolderIcon from "@mui/icons-material/Folder";
-import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
-import Brightness5Icon from "@mui/icons-material/Brightness5";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import EventIcon from "@mui/icons-material/Event";
+import CodeIcon from "@mui/icons-material/Code";
+import MusicNoteIcon from "@mui/icons-material/MusicNote";
+import EmailIcon from "@mui/icons-material/Email";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import SchoolIcon from "@mui/icons-material/School";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import BugReportIcon from "@mui/icons-material/BugReport";
 
 const icons = [
-  "AccessAlarmIcon",
-  "AccountCircleIcon",
-  "ArrowForwardIcon",
-  "AutoFixHighIcon",
   "DeleteIcon",
-  "FolderIcon",
-  "Brightness5Icon",
+  "AssignmentIcon",
+  "CheckCircleIcon",
+  "EventIcon",
+  "CodeIcon",
+  "MusicNoteIcon",
+  "EmailIcon",
+  "FitnessCenterIcon",
+  "SchoolIcon",
+  "ShoppingCartIcon",
+  "BugReportIcon",
 ];
 
 const iconMap = {
-  AccessAlarmIcon,
-  AccountCircleIcon,
-  ArrowForwardIcon,
-  AutoFixHighIcon,
   DeleteIcon,
-  FolderIcon,
-  Brightness5Icon,
+  AssignmentIcon,
+  CheckCircleIcon,
+  EventIcon,
+  CodeIcon,
+  MusicNoteIcon,
+  EmailIcon,
+  FitnessCenterIcon,
+  SchoolIcon,
+  ShoppingCartIcon,
+  BugReportIcon,
 };
 
 export const TaskForm = () => {

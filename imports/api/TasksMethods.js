@@ -13,4 +13,8 @@ Meteor.methods({
       createdAt: new Date(),
     });
   },
+
+  "tasks.delete"({ _id }) {
+    return TasksCollection.removeAsync(_id);
+  },
 });

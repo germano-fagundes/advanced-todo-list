@@ -3,10 +3,10 @@ import { TasksCollection } from "../imports/api/TasksCollection";
 import "../imports/api/TasksPublications";
 import "../imports/api/TasksMethods";
 import { Accounts } from "meteor/accounts-base";
-import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import EmailIcon from "@mui/icons-material/Email";
+import EventIcon from "@mui/icons-material/Event";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const SEED_USERNAME = "username";
 const SEED_PASSWORD = "password";
@@ -36,20 +36,20 @@ Meteor.startup(async () => {
   if ((await TasksCollection.find().countAsync()) === 0) {
     [
       {
-        icon: "AccessAlarmIcon",
-        primary: "Configurar alarme",
+        icon: "ShoppingCartIcon",
+        primary: "Fazer as compras do mês no supermercado",
       },
       {
-        icon: "AccountCircleIcon",
-        primary: "Criar conta do Syntonia",
+        icon: "EventIcon",
+        primary: "Marcar consulta anual no dentista",
       },
       {
-        icon: "ArrowForwardIcon",
-        primary: "Endireitar a cadeira",
+        icon: "EmailIcon",
+        primary: "Responder e-mails pendentes da semana",
       },
       {
-        icon: "AutoFixHighIcon",
-        primary: "Consertar mesa",
+        icon: "FitnessCenterIcon",
+        primary: "Treino de 30 minutos na academia",
       },
     ].forEach((task) => insertTask(task, user));
   }
