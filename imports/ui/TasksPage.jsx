@@ -3,6 +3,7 @@ import { useTracker } from "meteor/react-meteor-data";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Fragment } from "react";
 import { ToDoList } from "./ToDoList";
+import { TaskForm } from "./TaskForm";
 import { Meteor } from "meteor/meteor";
 
 export const TasksPage = () => {
@@ -17,6 +18,7 @@ export const TasksPage = () => {
   return (
     <div>
       <CssBaseline />
+      <TaskForm />
       <ToDoList />
     </div>
   );

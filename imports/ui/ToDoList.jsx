@@ -23,6 +23,9 @@ const iconMap = {
   AccountCircleIcon,
   ArrowForwardIcon,
   AutoFixHighIcon,
+  DeleteIcon,
+  FolderIcon,
+  Brightness5Icon,
 };
 
 export const ToDoList = () => {
