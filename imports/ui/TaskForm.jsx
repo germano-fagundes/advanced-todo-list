@@ -55,8 +55,9 @@ export const TaskForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (task == "") return;
     Meteor.callAsync("tasks.insert", {
-      icon,
+      icon: icon || "CheckCircleIcon",
       primary: task.trim(),
     });
     setIcon("");
