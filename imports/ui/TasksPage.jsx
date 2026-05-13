@@ -18,6 +18,7 @@ export const TasksPage = () => {
   return (
     <div>
       <CssBaseline />
+      <Link to="/">Página inicial</Link>
       <TaskForm />
       <ToDoList />
     </div>

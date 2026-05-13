@@ -1,0 +1,18 @@
+.task {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.task:hover {
+  background-color: #fafafa;
+}
+
+.task-complete {
+  opacity: 0.25;
+  transition: all 0.2s ease-in-out;
+}
+
+.task-not-complete {
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+}

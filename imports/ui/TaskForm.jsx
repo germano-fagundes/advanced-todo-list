@@ -50,7 +50,6 @@ export const TaskForm = () => {
   const iconButtonHandler = (e, i) => {
     e.preventDefault();
     setIcon(i);
-    console.log(i);
   };
 
   const handleSubmit = (e) => {

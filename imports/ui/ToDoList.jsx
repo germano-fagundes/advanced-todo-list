@@ -46,6 +46,10 @@ export const ToDoList = () => {
     Meteor.callAsync("tasks.delete", { _id });
   };
 
+  const handleToggleTask = (_id) => {
+    Meteor.callAsync("tasks.toggle", { _id });
+  };
+
   if (isLoading()) return <div>Loading...</div>;
 
   return (
@@ -54,6 +58,8 @@ export const ToDoList = () => {
         const IconComponent = iconMap[task.icon];
         return (
           <ListItem
+            className="task"
+            onClick={() => handleToggleTask(task._id)}
             secondaryAction={
               <IconButton
                 onClick={() => handleDeleteTask(task._id)}
@@ -65,10 +71,16 @@ export const ToDoList = () => {
             }
             key={task._id}
           >
-            <ListItemAvatar>
+            <ListItemAvatar
+              className={task.complete ? "task-complete" : "task-not-complete"}
+            >
               <Avatar>{IconComponent && <IconComponent />}</Avatar>
             </ListItemAvatar>
-            <ListItemText primary={task.primary} secondary={task.secondary} />
+            <ListItemText
+              className={task.complete ? "task-complete" : "task-not-complete"}
+              primary={task.primary}
+              secondary={task.secondary}
+            />
           </ListItem>
         );
       })}
