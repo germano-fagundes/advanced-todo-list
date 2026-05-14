@@ -1,9 +1,14 @@
 import { Meteor } from "meteor/meteor";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useTracker } from "meteor/react-meteor-data";
-import CssBaseline from "@mui/material/CssBaseline";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
+import {
+  Switch,
+  IconButton,
+  CssBaseline,
+  FormControlLabel,
+  Button,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import { Fragment, useState } from "react";
 import { ToDoList } from "./ToDoList";
 import { TaskForm } from "./TaskForm";
@@ -15,9 +20,10 @@ export const TasksPage = () => {
     user: Meteor.user(),
     isLoggingIn: Meteor.loggingIn(),
   }));
-
   if (isLoggingIn) return <div>Carregando sessão...</div>;
   if (!user) return <Navigate to="/" replace />;
+
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -33,6 +39,13 @@ export const TasksPage = () => {
           />
         }
       />
+      <Button
+        variant="contained"
+        startIcon={<EditIcon />}
+        onClick={() => navigate("/tasks/edit")}
+      >
+        Editar
+      </Button>
       <ToDoList showCompleted={showCompleted} />
     </div>
   );
