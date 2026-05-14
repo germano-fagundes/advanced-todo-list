@@ -37,10 +37,15 @@ const iconMap = {
   BugReportIcon,
 };
 
-export const ToDoList = () => {
+export const ToDoList = ({ showCompleted }) => {
   const isLoading = useSubscribe("tasks");
 
-  const tasks = useTracker(() => TasksCollection.find({}).fetch());
+  const hideCompletedFilter = { complete: { $ne: true } };
+  const tasks = useTracker(() =>
+    TasksCollection.find(showCompleted ? {} : hideCompletedFilter, {
+      sort: { createdAt: -1 },
+    }).fetch(),
+  );
 
   const handleDeleteTask = (_id) => {
     Meteor.callAsync("tasks.delete", { _id });

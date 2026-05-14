@@ -16,6 +16,7 @@ const insertTask = (task, user) => {
     icon: task.icon,
     primary: task.primary,
     secondary: SEED_USERNAME,
+    complete: false,
     createdAt: new Date(),
     userId: user._id,
   });
