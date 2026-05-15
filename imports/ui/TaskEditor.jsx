@@ -1,6 +1,6 @@
 import React from "react";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
+import { Button, MenuItem, TextField } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
 
 const status = [
   {
@@ -17,7 +17,7 @@ const status = [
   },
 ];
 
-export const TaskEditor = ({ task, className }) => {
+export const TaskEditor = ({ task, className, onSubmit }) => {
   return (
     <div className={className}>
       <TextField margin="normal" label="Nome" variant="outlined" />
@@ -48,6 +48,9 @@ export const TaskEditor = ({ task, className }) => {
         }}
         variant="outlined"
       />
+      <Button variant="contained" startIcon={<CheckIcon />} onClick={onSubmit}>
+        Alterar
+      </Button>
     </div>
   );
 };

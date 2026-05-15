@@ -22,6 +22,7 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import SchoolIcon from "@mui/icons-material/School";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BugReportIcon from "@mui/icons-material/BugReport";
+import CloseIcon from "@mui/icons-material/Close";
 import { TaskEditor } from "./TaskEditor";
 import { Meteor } from "meteor/meteor";
 
@@ -55,11 +56,22 @@ export const TasksEditPage = () => {
     Meteor.callAsync("tasks.delete", { _id });
   };
 
+  const handleToggleEditTask = (taskId) => {
+    taskId === editingTaskId
+      ? setEditingTaskId(null)
+      : setEditingTaskId(taskId);
+  };
+
+  const handleSubmit = () => {
+    // todo: alterar infos na tarefa
+    setEditingTaskId(null);
+  };
+
   if (isLoading()) return <div>Loading...</div>;
 
   return (
     <List>
-      {tasks.map((task, i) => {
+      {tasks.map((task) => {
         const IconComponent = iconMap[task.icon];
         return (
           <div key={task._id}>
@@ -68,11 +80,11 @@ export const TasksEditPage = () => {
               secondaryAction={
                 <div>
                   <IconButton
-                    onClick={() => setEditingTaskId(task._id)}
+                    onClick={() => handleToggleEditTask(task._id)}
                     edge="end"
                     aria-label="edit"
                   >
-                    <EditIcon />
+                    {task._id === editingTaskId ? <CloseIcon /> : <EditIcon />}
                   </IconButton>
                   <IconButton
                     onClick={() => handleDeleteTask(task._id)}
@@ -96,6 +108,7 @@ export const TasksEditPage = () => {
                   ? "task-editor active"
                   : "task-editor"
               }
+              onSubmit={handleSubmit}
             />
           </div>
         );

@@ -20,8 +20,8 @@ export const TasksPage = () => {
     user: Meteor.user(),
     isLoggingIn: Meteor.loggingIn(),
   }));
-  if (isLoggingIn) return <div>Carregando sessão...</div>;
   if (!user) return <Navigate to="/" replace />;
+  if (isLoggingIn) return <div>Carregando sessão...</div>;
 
   const navigate = useNavigate();
 
