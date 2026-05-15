@@ -8,13 +8,21 @@
 }
 
 .task-complete {
-  opacity: 0.25;
+  opacity: 0.3;
   transition: all 0.2s ease-in-out;
 }
 
 .task-not-complete {
   opacity: 1;
   transition: all 0.2s ease-in-out;
+}
+
+.task-more {
+  padding: 0 0 1rem 1rem;
+}
+
+.task-desc {
+  padding: 0.5rem 0 0 1rem;
 }
 
 .task-editor {

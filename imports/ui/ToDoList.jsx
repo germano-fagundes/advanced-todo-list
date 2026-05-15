@@ -9,6 +9,7 @@ import {
   ListItemAvatar,
   ListItemText,
   Avatar,
+  Divider,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AssignmentIcon from "@mui/icons-material/Assignment";
@@ -22,6 +23,7 @@ import SchoolIcon from "@mui/icons-material/School";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BugReportIcon from "@mui/icons-material/BugReport";
 import { Meteor } from "meteor/meteor";
+import TaskMoreInfo from "./TaskMoreInfo";
 
 const iconMap = {
   DeleteIcon,
@@ -62,31 +64,47 @@ export const ToDoList = ({ showCompleted }) => {
       {tasks.map((task) => {
         const IconComponent = iconMap[task.icon];
         return (
-          <ListItem
+          <div
+            key={task._id}
             className="task"
             onClick={() => handleToggleTask(task._id)}
-            secondaryAction={
-              <IconButton
-                onClick={() => handleDeleteTask(task._id)}
-                edge="end"
-                aria-label="delete"
-              >
-                <DeleteIcon />
-              </IconButton>
-            }
-            key={task._id}
           >
-            <ListItemAvatar
-              className={task.complete ? "task-complete" : "task-not-complete"}
+            <ListItem
+              secondaryAction={
+                <IconButton
+                  onClick={() => handleDeleteTask(task._id)}
+                  edge="end"
+                  aria-label="delete"
+                >
+                  <DeleteIcon />
+                </IconButton>
+              }
             >
-              <Avatar>{IconComponent && <IconComponent />}</Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              className={task.complete ? "task-complete" : "task-not-complete"}
-              primary={task.primary}
-              secondary={task.secondary}
-            />
-          </ListItem>
+              <ListItemAvatar
+                className={
+                  task.complete ? "task-complete" : "task-not-complete"
+                }
+              >
+                <Avatar>{IconComponent && <IconComponent />}</Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                className={
+                  task.complete ? "task-complete" : "task-not-complete"
+                }
+                primary={task.primary}
+                secondary={task.secondary}
+              />
+            </ListItem>
+            {!task.complete ? (
+              <TaskMoreInfo
+                className={
+                  task.complete ? "task-complete" : "task-not-complete"
+                }
+                task={task}
+              />
+            ) : null}
+            <Divider variant="middle" component="li" />
+          </div>
         );
       })}
     </List>
