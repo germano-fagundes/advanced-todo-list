@@ -43,7 +43,9 @@ const iconMap = {
 };
 
 export const TaskForm = () => {
-  const [task, setTask] = useState("");
+  const [taskName, setTaskName] = useState("");
+  const [taskDesc, setTaskDesc] = useState("");
+  const [taskDueDate, setTaskDueDate] = useState("");
   const [icon, setIcon] = useState("");
   const user = useTracker(() => Meteor.user());
 
@@ -54,13 +56,17 @@ export const TaskForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (task == "") return;
+    if (taskName == "") return;
     Meteor.callAsync("tasks.insert", {
       icon: icon || "CheckCircleIcon",
-      primary: task.trim(),
+      primary: taskName.trim(),
+      description: taskDesc.trim(),
+      dueDate: taskDueDate.trim(),
     });
     setIcon("");
-    setTask("");
+    setTaskName("");
+    setTaskDesc("");
+    setTaskDueDate("");
   };
 
   return (
@@ -80,9 +86,23 @@ export const TaskForm = () => {
 
         <input
           type="text"
-          placeholder="Digite para adicionar mais tarefas"
-          value={task}
-          onChange={(e) => setTask(e.target.value)}
+          placeholder="Nome"
+          value={taskName}
+          onChange={(e) => setTaskName(e.target.value)}
+        />
+
+        <input
+          type="text"
+          placeholder="Descrição"
+          value={taskDesc}
+          onChange={(e) => setTaskDesc(e.target.value)}
+        />
+
+        <input
+          type="date"
+          placeholder="Data de entrega"
+          value={taskDueDate}
+          onChange={(e) => setTaskDueDate(e.target.value)}
         />
 
         <button type="submit">Adicionar</button>

@@ -62,8 +62,7 @@ export const TasksEditPage = () => {
       : setEditingTaskId(taskId);
   };
 
-  const handleSubmit = () => {
-    // todo: alterar infos na tarefa
+  const resetEditingTaskId = () => {
     setEditingTaskId(null);
   };
 
@@ -108,7 +107,7 @@ export const TasksEditPage = () => {
                   ? "task-editor active"
                   : "task-editor"
               }
-              onSubmit={handleSubmit}
+              resetEditingTaskId={resetEditingTaskId}
             />
           </div>
         );
