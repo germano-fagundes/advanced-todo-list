@@ -2,7 +2,13 @@ import { Meteor } from "meteor/meteor";
 import { TasksCollection } from "./TasksCollection";
 
 Meteor.methods({
-  "tasks.insert": async function ({ icon, primary, description, dueDate }) {
+  "tasks.insert": async function ({
+    icon,
+    primary,
+    description,
+    dueDate,
+    personal,
+  }) {
     const user = await Meteor.users.findOneAsync(this.userId);
     const username = user?.username;
     return TasksCollection.insertAsync({
@@ -12,9 +18,10 @@ Meteor.methods({
       description,
       dueDate,
       status: "registered",
-      userId: this.userId,
-      createdAt: new Date(),
       complete: false,
+      personal,
+      createdAt: new Date(),
+      userId: this.userId,
     });
   },
 

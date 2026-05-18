@@ -21,6 +21,7 @@ const insertTask = (task, user, secondary) => {
     dueDate: task.dueDate,
     status: "registered",
     complete: false,
+    personal: task.personal,
     createdAt: new Date(),
     userId: user._id,
   });
@@ -53,12 +54,14 @@ Meteor.startup(async () => {
         primary: "Fazer as compras do mês no supermercado",
         description: "Uma tarefa essencial de organização doméstica.",
         dueDate: new Date(),
+        personal: true,
       },
       {
         icon: "EventIcon",
         primary: "Marcar consulta anual no dentista",
         description: "Focada em saúde e manutenção preventiva.",
         dueDate: new Date(),
+        personal: false,
       },
       {
         icon: "EmailIcon",
@@ -66,12 +69,14 @@ Meteor.startup(async () => {
         description:
           "Comum para qualquer pessoa que lida com comunicação digital ou trabalho.",
         dueDate: new Date(),
+        personal: true,
       },
       {
         icon: "FitnessCenterIcon",
         primary: "Treino de 30 minutos na academia",
         description: "Representa metas de bem-estar e atividades físicas.",
         dueDate: new Date(),
+        personal: false,
       },
     ].forEach((task) => {
       insertTask(task, user, SEED_USERNAME);

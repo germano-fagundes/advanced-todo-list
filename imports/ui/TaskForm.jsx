@@ -13,6 +13,8 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import SchoolIcon from "@mui/icons-material/School";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BugReportIcon from "@mui/icons-material/BugReport";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 const icons = [
   "DeleteIcon",
@@ -46,6 +48,7 @@ export const TaskForm = () => {
   const [taskName, setTaskName] = useState("");
   const [taskDesc, setTaskDesc] = useState("");
   const [taskDueDate, setTaskDueDate] = useState("");
+  const [taskPersonal, setTaskPersonal] = useState(false);
   const [icon, setIcon] = useState("");
   const user = useTracker(() => Meteor.user());
 
@@ -62,11 +65,13 @@ export const TaskForm = () => {
       primary: taskName.trim(),
       description: taskDesc.trim(),
       dueDate: taskDueDate.trim(),
+      personal: taskPersonal,
     });
     setIcon("");
     setTaskName("");
     setTaskDesc("");
     setTaskDueDate("");
+    setTaskPersonal(false);
   };
 
   return (
@@ -104,6 +109,8 @@ export const TaskForm = () => {
           value={taskDueDate}
           onChange={(e) => setTaskDueDate(e.target.value)}
         />
+
+        <FormControlLabel control={<Checkbox />} label="Pessoal" />
 
         <button type="submit">Adicionar</button>
       </form>
