@@ -36,15 +36,16 @@ Meteor.methods({
     status,
     dueDate,
   }) {
-    const task = await TasksCollection.findOneAsync(_id);
-    for (let i = 1; i < arguments.length; i++) {
-      let newValue;
-      if (arguments[i] !== "" && arguments[i] != null) {
-        newValue = arguments[i];
-        TasksCollection.updateAsync(_id, {
-          $set: { newValue },
-        });
-      }
-    }
+    const update = {};
+    const oldTask = await TasksCollection.findOneAsync(_id);
+    if (primary !== undefined && primary !== "" && primary !== null)
+      update.primary = primary;
+    if (description !== undefined && description !== "" && description !== null)
+      update.description = description;
+    if (status !== oldTask.status) update.status = status;
+    if (dueDate !== undefined && dueDate !== "" && dueDate !== null)
+      update.dueDate = dueDate;
+    if (Object.keys(update).length === 0) return null;
+    return TasksCollection.updateAsync(_id, { $set: update });
   },
 });

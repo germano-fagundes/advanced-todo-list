@@ -18,21 +18,21 @@ const statuses = [
   },
 ];
 
-export const TaskEditor = ({ task, className, resetEditingTaskId }) => {
+export const TaskEditor = ({ taskId, className, resetEditingTaskId }) => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [status, setStatus] = useState("registered");
   const [date, setDate] = useState("");
 
   const handleSubmit = (_id) => {
-    resetEditingTaskId();
     Meteor.callAsync("tasks.update", {
-      _id,
-      primary: name,
-      description: desc,
-      status,
+      _id: _id,
+      primary: name.trim(),
+      description: desc.trim(),
+      status: status,
       dueDate: date,
     });
+    resetEditingTaskId();
   };
 
   return (
@@ -80,7 +80,7 @@ export const TaskEditor = ({ task, className, resetEditingTaskId }) => {
       <Button
         variant="contained"
         startIcon={<CheckIcon />}
-        onClick={handleSubmit}
+        onClick={() => handleSubmit(taskId)}
       >
         Alterar
       </Button>

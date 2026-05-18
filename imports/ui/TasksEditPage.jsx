@@ -101,7 +101,7 @@ export const TasksEditPage = () => {
               <ListItemText primary={task.primary} secondary={task.secondary} />
             </ListItem>
             <TaskEditor
-              task={task}
+              taskId={task._id}
               className={
                 task._id === editingTaskId
                   ? "task-editor active"
