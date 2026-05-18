@@ -28,6 +28,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { TaskEditor } from "./TaskEditor";
 import { Meteor } from "meteor/meteor";
+import { formatDate } from "./TaskMoreInfo";
 
 const iconMap = {
   DeleteIcon,
@@ -41,13 +42,6 @@ const iconMap = {
   SchoolIcon,
   ShoppingCartIcon,
   BugReportIcon,
-};
-
-const formatDate = (d) => {
-  if (!d) return "";
-  const date = d instanceof Date ? d : new Date(d);
-  if (Number.isNaN(date.getTime())) return "";
-  return date.toLocaleDateString();
 };
 
 const truncate = (string, max) => {

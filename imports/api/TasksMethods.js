@@ -18,14 +18,21 @@ Meteor.methods({
     });
   },
 
-  "tasks.delete"({ _id }) {
+  "tasks.delete": async function ({ _id }) {
+    const task = await TasksCollection.findOneAsync(_id);
+    if (this.userId !== task.userId) return null;
+
     return TasksCollection.removeAsync(_id);
   },
 
   "tasks.toggle": async function ({ _id }) {
     const task = await TasksCollection.findOneAsync(_id);
+    if (this.userId !== task.userId) return null;
+
+    const taskStatus = !task.complete ? "done" : "registered";
+
     return TasksCollection.updateAsync(_id, {
-      $set: { complete: !task.complete },
+      $set: { complete: !task.complete, status: taskStatus },
     });
   },
 
@@ -36,8 +43,12 @@ Meteor.methods({
     status,
     dueDate,
   }) {
-    const update = {};
     const oldTask = await TasksCollection.findOneAsync(_id);
+    const complete = status == "done";
+
+    if (this.userId !== oldTask.userId) return null;
+    const update = {};
+    if (complete !== oldTask.complete) update.complete = complete;
     if (primary !== undefined && primary !== "" && primary !== null)
       update.primary = primary;
     if (description !== undefined && description !== "" && description !== null)

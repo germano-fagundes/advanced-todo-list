@@ -30,6 +30,7 @@ export const TaskEditor = ({ taskId, className, resetEditingTaskId }) => {
       primary: name.trim(),
       description: desc.trim(),
       status: status,
+      completed: status == "done",
       dueDate: date,
     });
     resetEditingTaskId();

@@ -9,13 +9,14 @@ import EventIcon from "@mui/icons-material/Event";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const SEED_USERNAME = "username";
+const SECONDARY_USERNAME = "germano";
 const SEED_PASSWORD = "password";
 
-const insertTask = (task, user) => {
+const insertTask = (task, user, secondary) => {
   TasksCollection.insertAsync({
     icon: task.icon,
     primary: task.primary,
-    secondary: SEED_USERNAME,
+    secondary: secondary,
     description: task.description,
     dueDate: task.dueDate,
     status: "registered",
@@ -24,7 +25,6 @@ const insertTask = (task, user) => {
     userId: user._id,
   });
 };
-
 Meteor.startup(async () => {
   if (!(await Accounts.findUserByUsername(SEED_USERNAME))) {
     await Accounts.createUser({
@@ -34,6 +34,15 @@ Meteor.startup(async () => {
   }
 
   const user = await Accounts.findUserByUsername(SEED_USERNAME);
+
+  if (!(await Accounts.findUserByUsername(SECONDARY_USERNAME))) {
+    await Accounts.createUser({
+      username: SECONDARY_USERNAME,
+      password: SEED_PASSWORD,
+    });
+  }
+
+  const user2 = await Accounts.findUserByUsername(SECONDARY_USERNAME);
 
   await TasksCollection.removeAsync({});
 
@@ -64,6 +73,9 @@ Meteor.startup(async () => {
         description: "Representa metas de bem-estar e atividades físicas.",
         dueDate: new Date(),
       },
-    ].forEach((task) => insertTask(task, user));
+    ].forEach((task) => {
+      insertTask(task, user, SEED_USERNAME);
+      insertTask(task, user2, SECONDARY_USERNAME);
+    });
   }
 });
