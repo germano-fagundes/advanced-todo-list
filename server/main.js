@@ -43,26 +43,26 @@ Meteor.startup(async () => {
         icon: "ShoppingCartIcon",
         primary: "Fazer as compras do mês no supermercado",
         description: "Uma tarefa essencial de organização doméstica.",
-        dueDate: "2026-08-02",
+        dueDate: new Date(),
       },
       {
         icon: "EventIcon",
         primary: "Marcar consulta anual no dentista",
         description: "Focada em saúde e manutenção preventiva.",
-        dueDate: "2026-08-02",
+        dueDate: new Date(),
       },
       {
         icon: "EmailIcon",
         primary: "Responder e-mails pendentes da semana",
         description:
           "Comum para qualquer pessoa que lida com comunicação digital ou trabalho.",
-        dueDate: "2026-08-02",
+        dueDate: new Date(),
       },
       {
         icon: "FitnessCenterIcon",
         primary: "Treino de 30 minutos na academia",
         description: "Representa metas de bem-estar e atividades físicas.",
-        dueDate: "2026-08-02",
+        dueDate: new Date(),
       },
     ].forEach((task) => insertTask(task, user));
   }
