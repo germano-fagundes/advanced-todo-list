@@ -17,7 +17,8 @@
     "@swc/helpers": "^0.5.17",
     "bcrypt": "^6.0.0",
     "meteor-node-stubs": "^1.2.12",
-    "react-router-dom": "^7.15.0"
+    "react-router-dom": "^7.15.0",
+    "simpl-schema": "^3.4.7"
   },
   "overrides": {
     "react-is": "^18.2.0"

@@ -8,8 +8,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import EventIcon from "@mui/icons-material/Event";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-const SEED_USERNAME = "username";
-const SECONDARY_USERNAME = "germano";
+const SEED_EMAIL = "email@email.com";
 const SEED_PASSWORD = "password";
 
 const insertTask = (task, user, secondary) => {
@@ -27,23 +26,20 @@ const insertTask = (task, user, secondary) => {
   });
 };
 Meteor.startup(async () => {
-  if (!(await Accounts.findUserByUsername(SEED_USERNAME))) {
-    await Accounts.createUser({
-      username: SEED_USERNAME,
+  if (!(await Accounts.findUserByEmail(SEED_EMAIL))) {
+    Accounts.createUser({
+      firstName: "Syna",
+      surname: "",
+      email: SEED_EMAIL,
       password: SEED_PASSWORD,
+      birthDate: new Date("2000-01-01"),
+      gender: "female",
+      company: "Synergia",
+      createdAt: new Date(),
     });
   }
 
-  const user = await Accounts.findUserByUsername(SEED_USERNAME);
-
-  if (!(await Accounts.findUserByUsername(SECONDARY_USERNAME))) {
-    await Accounts.createUser({
-      username: SECONDARY_USERNAME,
-      password: SEED_PASSWORD,
-    });
-  }
-
-  const user2 = await Accounts.findUserByUsername(SECONDARY_USERNAME);
+  const user = await Accounts.findUserByEmail(SEED_EMAIL);
 
   await TasksCollection.removeAsync({});
 
@@ -79,8 +75,7 @@ Meteor.startup(async () => {
         personal: false,
       },
     ].forEach((task) => {
-      insertTask(task, user, SEED_USERNAME);
-      insertTask(task, user2, SECONDARY_USERNAME);
+      insertTask(task, user, SEED_EMAIL);
     });
   }
 });

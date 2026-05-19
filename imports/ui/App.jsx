@@ -19,7 +19,10 @@ export const App = () => {
           <Link to="/tasks">Tasks</Link>
         </Fragment>
       ) : (
-        <LoginForm />
+        <div>
+          <LoginForm />
+          <Link to="/signup">Criar conta</Link>
+        </div>
       )}
     </div>
   );
