@@ -59,7 +59,7 @@ export const TaskForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (taskName == "") return;
+    if (taskName == "" || taskDesc == " " || taskDueDate == "") return;
     Meteor.callAsync("tasks.insert", {
       icon: icon || "CheckCircleIcon",
       primary: taskName.trim(),
@@ -67,6 +67,7 @@ export const TaskForm = () => {
       dueDate: taskDueDate.trim(),
       personal: taskPersonal,
     });
+    console.log(taskDueDate);
     setIcon("");
     setTaskName("");
     setTaskDesc("");
@@ -110,7 +111,15 @@ export const TaskForm = () => {
           onChange={(e) => setTaskDueDate(e.target.value)}
         />
 
-        <FormControlLabel control={<Checkbox />} label="Pessoal" />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={taskPersonal}
+              onChange={(e) => setTaskPersonal(e.target.checked)}
+            />
+          }
+          label="Pessoal"
+        />
 
         <button type="submit">Adicionar</button>
       </form>

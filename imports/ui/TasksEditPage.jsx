@@ -71,7 +71,7 @@ const statusMap = (status) => {
 
 export const TasksEditPage = () => {
   const [editingTaskId, setEditingTaskId] = useState(null);
-  const isLoading = useSubscribe("tasks");
+  const isLoading = useSubscribe("tasks.edit");
   const tasks = useTracker(() =>
     TasksCollection.find(
       {},
