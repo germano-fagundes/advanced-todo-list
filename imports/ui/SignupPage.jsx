@@ -18,7 +18,6 @@ export const SignupPage = () => {
   const [birthDate, setBirthDate] = useState("");
   const [gender, setGender] = useState("");
   const [company, setCompany] = useState("");
-  const user = useTracker(() => Meteor.user());
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,10 +32,6 @@ export const SignupPage = () => {
         company,
       },
     });
-
-    console.log(
-      `${user.profile.firstName}, ${user.profile.surname}, ${formatDate(user.profile.birthDate)}, ${user.profile.gender}, ${user.emails[0].address}, ${user.profile.company}`,
-    );
 
     setFirstName("");
     setSurname("");

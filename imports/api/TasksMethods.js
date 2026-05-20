@@ -10,11 +10,11 @@ Meteor.methods({
     personal,
   }) {
     const user = await Meteor.users.findOneAsync(this.userId);
-    const username = user?.username;
+    const secondary = user.profile?.firstName || user.email || "Unknown";
     return TasksCollection.insertAsync({
       icon,
       primary,
-      secondary: username,
+      secondary,
       description,
       dueDate,
       status: "registered",
