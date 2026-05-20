@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Meteor } from "meteor/meteor";
+import { useTracker } from "meteor/react-meteor-data";
+import { Accounts } from "meteor/accounts-base";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import { formatDate } from "./TaskMoreInfo";
 
 export const SignupPage = () => {
   const [firstName, setFirstName] = useState("");
@@ -15,18 +18,33 @@ export const SignupPage = () => {
   const [birthDate, setBirthDate] = useState("");
   const [gender, setGender] = useState("");
   const [company, setCompany] = useState("");
+  const user = useTracker(() => Meteor.user());
 
-  const handleSubmit = () => {
-    Meteor.callAsync("accounts.create", {
-      firstName,
-      surname,
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    Accounts.createUser({
       email,
       password,
-      birthDate,
-      gender,
-      company,
-      createdAt: new Date(),
+      profile: {
+        firstName,
+        surname,
+        birthDate: new Date(birthDate),
+        gender,
+        company,
+      },
     });
+
+    console.log(
+      `${user.profile.firstName}, ${user.profile.surname}, ${formatDate(user.profile.birthDate)}, ${user.profile.gender}, ${user.emails[0].address}, ${user.profile.company}`,
+    );
+
+    setFirstName("");
+    setSurname("");
+    setEmail("");
+    setPassword("");
+    setBirthDate("");
+    setGender("");
+    setCompany("");
   };
 
   return (
@@ -38,6 +56,7 @@ export const SignupPage = () => {
         autoComplete="off"
       >
         <TextField
+          value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
           required
           label="Nome"
@@ -45,6 +64,7 @@ export const SignupPage = () => {
         />
 
         <TextField
+          value={surname}
           onChange={(e) => setSurname(e.target.value)}
           required
           label="Sobrenome"
@@ -52,6 +72,7 @@ export const SignupPage = () => {
         />
 
         <TextField
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
           type="email"
@@ -60,6 +81,7 @@ export const SignupPage = () => {
         />
 
         <TextField
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           type="password"
@@ -68,6 +90,7 @@ export const SignupPage = () => {
         />
 
         <TextField
+          value={birthDate}
           onChange={(e) => setBirthDate(e.target.value)}
           required
           type="date"
@@ -90,13 +113,14 @@ export const SignupPage = () => {
         </Select>
 
         <TextField
+          value={company}
           onChange={(e) => setCompany(e.target.value)}
           required
           label="Empresa"
           variant="outlined"
         />
 
-        <Button variant="contained" onClick={() => handleSubmit()}>
+        <Button variant="contained" onClick={(e) => handleSubmit(e)}>
           Criar conta
         </Button>
       </Box>
