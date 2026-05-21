@@ -4,8 +4,10 @@ import { styled, useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
+import Avatar from "@mui/material/Avatar";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -20,7 +22,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-export const DrawerMenu = ({ open, drawerWidth, handleToggleDrawer }) => {
+export const DrawerMenu = ({ open, drawerWidth, handleToggleDrawer, user }) => {
   const navigate = useNavigate();
   const buttons = [
     {
@@ -29,7 +31,7 @@ export const DrawerMenu = ({ open, drawerWidth, handleToggleDrawer }) => {
     },
     {
       text: "Perfil",
-      action: () => navigate("/"),
+      action: () => navigate("/profile"),
     },
     {
       text: "Log Out",
@@ -56,6 +58,15 @@ export const DrawerMenu = ({ open, drawerWidth, handleToggleDrawer }) => {
         <IconButton onClick={handleToggleDrawer}>
           <ChevronLeftIcon />
         </IconButton>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>{user.profile.image}</Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary={user.profile.firstName}
+            secondary={user.emails[0].address}
+          />
+        </ListItem>
       </DrawerHeader>
       <List
         sx={{

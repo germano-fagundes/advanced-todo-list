@@ -9,7 +9,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { formatDate } from "./TaskMoreInfo";
-import { MuiFileInput } from "mui-file-input";
 
 export const SignupPage = () => {
   const [firstName, setFirstName] = useState("");
@@ -164,13 +163,6 @@ export const SignupPage = () => {
           onChange={(e) => handleImageChange(e)}
         />
         {image && <img src={image} alt="preview" style={{ width: 80 }} />}
-
-        {/* <MuiFileInput
-          value={image}
-          onChange={(e) => handleImageChange(e.target.value)}
-          placeholder="Foto de perfil"
-          inputProps={{ accept: "image/*, .pdf" }}
-        /> */}
 
         <Button variant="contained" onClick={(e) => handleSubmit(e)}>
           Criar conta

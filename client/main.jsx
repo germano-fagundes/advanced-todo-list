@@ -5,6 +5,7 @@ import { LoginForm } from "/imports/ui/LoginForm";
 import { SignupPage } from "../imports/ui/SignupPage";
 import { TasksPage } from "/imports/ui/TasksPage";
 import { TasksEditPage } from "/imports/ui/TasksEditPage";
+import { ProfilePage } from "/imports/ui/ProfilePage";
 import "/imports/ui/styles.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -18,6 +19,7 @@ Meteor.startup(() => {
         <Route path="/signup" exact={true} element={<SignupPage />} />
         <Route path="/tasks" element={<TasksPage />} />
         <Route path="/tasks/edit" element={<TasksEditPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>,
   );

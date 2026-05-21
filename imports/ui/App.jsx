@@ -54,6 +54,7 @@ export const App = () => {
               open={open}
               drawerWidth={drawerWidth}
               handleToggleDrawer={handleToggleDrawer}
+              user={user}
             />
             <Main open={open}>
               <IconButton
@@ -62,7 +63,11 @@ export const App = () => {
               >
                 {<ChevronRightIcon />}
               </IconButton>
-              <div>Seja bem vindo!</div>
+              {user.profile.gender == "male" ? (
+                <div>Seja bem vindo, {user.profile.firstName}!</div>
+              ) : (
+                <div>Seja bem vinda, {user.profile.firstName}!</div>
+              )}
             </Main>
           </Box>
         </Fragment>
