@@ -9,6 +9,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { formatDate } from "./TaskMoreInfo";
+import { MuiFileInput } from "mui-file-input";
 
 export const SignupPage = () => {
   const [firstName, setFirstName] = useState("");
@@ -18,20 +19,40 @@ export const SignupPage = () => {
   const [birthDate, setBirthDate] = useState("");
   const [gender, setGender] = useState("");
   const [company, setCompany] = useState("");
+  const [image, setImage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    Accounts.createUser({
-      email,
-      password,
-      profile: {
-        firstName,
-        surname,
-        birthDate: new Date(birthDate),
-        gender,
-        company,
+    if (
+      firstName == "" ||
+      surname == "" ||
+      email == "" ||
+      password == "" ||
+      birthDate == "" ||
+      gender == "" ||
+      company == "" ||
+      image == null
+    ) {
+      alert("Preencha todos os campos!");
+    }
+
+    const userId = await Accounts.createUser(
+      {
+        email,
+        password,
+        profile: {
+          firstName,
+          surname,
+          birthDate: new Date(birthDate),
+          gender,
+          company,
+        },
       },
-    });
+      (err) => {
+        if (err) return alert(err);
+        Meteor.callAsync("users.setImage", image);
+      },
+    );
 
     setFirstName("");
     setSurname("");
@@ -40,6 +61,28 @@ export const SignupPage = () => {
     setBirthDate("");
     setGender("");
     setCompany("");
+    setImage(null);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!/^image\/(png|jpeg|jpg)$/.test(file.type)) {
+      alert("Use PNG ou JPG");
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      alert("Arquivo muito grande (máx 2MB)");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImage(reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -114,6 +157,20 @@ export const SignupPage = () => {
           label="Empresa"
           variant="outlined"
         />
+
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => handleImageChange(e)}
+        />
+        {image && <img src={image} alt="preview" style={{ width: 80 }} />}
+
+        {/* <MuiFileInput
+          value={image}
+          onChange={(e) => handleImageChange(e.target.value)}
+          placeholder="Foto de perfil"
+          inputProps={{ accept: "image/*, .pdf" }}
+        /> */}
 
         <Button variant="contained" onClick={(e) => handleSubmit(e)}>
           Criar conta

@@ -2,6 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { TasksCollection } from "../imports/api/TasksCollection";
 import "../imports/api/TasksPublications";
 import "../imports/api/TasksMethods";
+import "../imports/api/UsersMethods";
 import { Accounts } from "meteor/accounts-base";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import EmailIcon from "@mui/icons-material/Email";
