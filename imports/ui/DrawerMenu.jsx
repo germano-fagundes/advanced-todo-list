@@ -60,7 +60,13 @@ export const DrawerMenu = ({ open, drawerWidth, handleToggleDrawer, user }) => {
         </IconButton>
         <ListItem>
           <ListItemAvatar>
-            <Avatar>{user.profile.image}</Avatar>
+            <Avatar>
+              <img
+                className="profile-picture"
+                src={user.profile.image}
+                alt="Imagem de perfil"
+              />
+            </Avatar>
           </ListItemAvatar>
           <ListItemText
             primary={user.profile.firstName}

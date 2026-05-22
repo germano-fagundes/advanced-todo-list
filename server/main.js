@@ -28,23 +28,25 @@ const insertTask = async (task, user, secondary) => {
 };
 
 Meteor.startup(async () => {
-  await Meteor.users.removeAsync({});
-  await TasksCollection.removeAsync({});
+  // await Meteor.users.removeAsync({});
+  // await TasksCollection.removeAsync({});
 
-  const userId = await Accounts.createUser({
-    email: SEED_EMAIL,
-    password: SEED_PASSWORD,
-    createdAt: new Date(),
-    profile: {
-      firstName: "Syna",
-      surname: "",
-      birthDate: new Date("2000-01-01"),
-      gender: "female",
-      company: "Synergia",
-    },
-  });
+  if (!(await Accounts.findUserByEmail(SEED_EMAIL))) {
+    const userId = await Accounts.createUser({
+      email: SEED_EMAIL,
+      password: SEED_PASSWORD,
+      createdAt: new Date(),
+      profile: {
+        firstName: "Syna",
+        surname: "",
+        birthDate: new Date("2000-01-01"),
+        gender: "female",
+        company: "Synergia",
+      },
+    });
+  }
 
-  const user = await Meteor.users.findOneAsync(userId);
+  const user = await Accounts.findUserByEmail(SEED_EMAIL);
 
   if (!user) {
     throw new Meteor.Error("Seed user was not created");

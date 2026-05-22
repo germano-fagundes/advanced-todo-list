@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 import { Accounts } from "meteor/accounts-base";
@@ -19,6 +20,7 @@ export const SignupPage = () => {
   const [gender, setGender] = useState("");
   const [company, setCompany] = useState("");
   const [image, setImage] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +37,9 @@ export const SignupPage = () => {
       alert("Preencha todos os campos!");
     }
 
+    const [y, m, d] = birthDate.split("-").map(Number);
+    const localBirthDate = new Date(y, m - 1, d);
+
     const userId = await Accounts.createUser(
       {
         email,
@@ -42,7 +47,7 @@ export const SignupPage = () => {
         profile: {
           firstName,
           surname,
-          birthDate: new Date(birthDate),
+          birthDate: localBirthDate,
           gender,
           company,
         },
@@ -61,6 +66,8 @@ export const SignupPage = () => {
     setGender("");
     setCompany("");
     setImage(null);
+
+    navigate("/");
   };
 
   const handleImageChange = (e) => {

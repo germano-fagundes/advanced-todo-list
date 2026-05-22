@@ -1,3 +1,10 @@
+.profile-picture {
+  width: 40px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center;
+}
+
 .task {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
