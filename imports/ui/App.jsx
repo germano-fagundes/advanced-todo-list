@@ -10,6 +10,8 @@ import { LoginForm } from "./LoginForm";
 import { TasksPage } from "./TasksPage";
 import { DrawerMenu } from "./DrawerMenu";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { Typography } from "@mui/material";
+import { Dashboard } from "./Dashboard";
 
 const drawerWidth = 240;
 
@@ -64,10 +66,15 @@ export const App = () => {
                 {<ChevronRightIcon />}
               </IconButton>
               {user.profile.gender == "male" ? (
-                <div>Seja bem vindo, {user.profile.firstName}!</div>
+                <Typography variant="h5">
+                  Seja bem vindo, {user.profile.firstName}!
+                </Typography>
               ) : (
-                <div>Seja bem vinda, {user.profile.firstName}!</div>
+                <Typography variant="h5">
+                  Seja bem vinda, {user.profile.firstName}!
+                </Typography>
               )}
+              <Dashboard />
             </Main>
           </Box>
         </Fragment>

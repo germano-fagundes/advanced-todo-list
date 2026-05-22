@@ -28,10 +28,9 @@ const insertTask = async (task, user, secondary) => {
 };
 
 Meteor.startup(async () => {
-  // await Meteor.users.removeAsync({});
-  // await TasksCollection.removeAsync({});
-
+  let userExists = true;
   if (!(await Accounts.findUserByEmail(SEED_EMAIL))) {
+    userExists = false;
     const userId = await Accounts.createUser({
       email: SEED_EMAIL,
       password: SEED_PASSWORD,
@@ -86,7 +85,9 @@ Meteor.startup(async () => {
     },
   ];
 
-  for (const task of tasks) {
-    await insertTask(task, user, secondary);
+  if (!userExists) {
+    for (const task of tasks) {
+      await insertTask(task, user, secondary);
+    }
   }
 });
