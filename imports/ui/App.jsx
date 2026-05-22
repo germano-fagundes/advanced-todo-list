@@ -1,15 +1,16 @@
 import { Meteor } from "meteor/meteor";
 import react, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
 import { useTracker } from "meteor/react-meteor-data";
 import { styled, useTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import { LoginForm } from "./LoginForm";
+import { LoginPage } from "./LoginPage";
 import { TasksPage } from "./TasksPage";
 import { DrawerMenu } from "./DrawerMenu";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Typography } from "@mui/material";
 import { Dashboard } from "./Dashboard";
 
@@ -58,31 +59,40 @@ export const App = () => {
               handleToggleDrawer={handleToggleDrawer}
               user={user}
             />
-            <Main open={open}>
-              <IconButton
-                onClick={handleToggleDrawer}
-                sx={{ display: open ? "none" : "block" }}
+            <Main
+              open={open}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 3,
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1,
+                  alignItems: "center",
+                }}
               >
-                {<ChevronRightIcon />}
-              </IconButton>
-              {user.profile.gender == "male" ? (
-                <Typography variant="h5">
-                  Seja bem vindo, {user.profile.firstName}!
-                </Typography>
-              ) : (
-                <Typography variant="h5">
-                  Seja bem vinda, {user.profile.firstName}!
-                </Typography>
-              )}
+                <IconButton onClick={handleToggleDrawer}>
+                  {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                </IconButton>
+                {user.profile.gender == "male" ? (
+                  <Typography variant="h5">
+                    Seja bem vindo, {user.profile.firstName}!
+                  </Typography>
+                ) : (
+                  <Typography variant="h5">
+                    Seja bem vinda, {user.profile.firstName}!
+                  </Typography>
+                )}
+              </Box>
               <Dashboard />
             </Main>
           </Box>
         </Fragment>
       ) : (
-        <div>
-          <LoginForm />
-          <Link to="/signup">Criar conta</Link>
-        </div>
+        <LoginPage />
       )}
     </div>
   );

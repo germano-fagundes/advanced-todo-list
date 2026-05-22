@@ -38,7 +38,7 @@ Meteor.startup(async () => {
       profile: {
         firstName: "Syna",
         surname: "",
-        birthDate: new Date("2000-01-01"),
+        birthDate: new Date(2000, 12, 1),
         gender: "female",
         company: "Synergia",
       },

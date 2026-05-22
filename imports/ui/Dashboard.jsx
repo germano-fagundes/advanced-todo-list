@@ -65,6 +65,7 @@ export const Dashboard = () => {
     >
       {cards.map((card) => (
         <Card
+          key={card.title}
           sx={{
             flex: 1,
             maxWidth: "500px",

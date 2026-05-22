@@ -22,7 +22,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-export const DrawerMenu = ({ open, drawerWidth, handleToggleDrawer, user }) => {
+export const DrawerMenu = ({ open, drawerWidth, user }) => {
   const navigate = useNavigate();
   const buttons = [
     {
@@ -55,9 +55,6 @@ export const DrawerMenu = ({ open, drawerWidth, handleToggleDrawer, user }) => {
       open={open}
     >
       <DrawerHeader>
-        <IconButton onClick={handleToggleDrawer}>
-          <ChevronLeftIcon />
-        </IconButton>
         <ListItem>
           <ListItemAvatar>
             <Avatar>
@@ -86,10 +83,12 @@ export const DrawerMenu = ({ open, drawerWidth, handleToggleDrawer, user }) => {
             key={btn.text}
             disablePadding
             sx={
-              i === lastBtnIdx && {
-                marginTop: "auto",
-                marginBottom: 10,
-              }
+              i === lastBtnIdx
+                ? {
+                    marginTop: "auto",
+                    marginBottom: 10,
+                  }
+                : undefined
             }
           >
             <ListItemButton onClick={btn.action}>
