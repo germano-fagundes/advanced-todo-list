@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 import { Accounts } from "meteor/accounts-base";
+import FormControl from "@mui/material/FormControl";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -95,25 +96,37 @@ export const SignupPage = () => {
     <>
       <Box
         component="form"
-        sx={{ "& > :not(style)": { m: 1, width: "25ch" } }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          width: "min(700px, 90vw)",
+        }}
         noValidate
         autoComplete="off"
       >
-        <TextField
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          required
-          label="Nome"
-          variant="outlined"
-        />
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+          }}
+        >
+          <TextField
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+            label="Nome"
+            variant="outlined"
+          />
 
-        <TextField
-          value={surname}
-          onChange={(e) => setSurname(e.target.value)}
-          required
-          label="Sobrenome"
-          variant="outlined"
-        />
+          <TextField
+            value={surname}
+            onChange={(e) => setSurname(e.target.value)}
+            required
+            label="Sobrenome"
+            variant="outlined"
+          />
+        </Box>
 
         <TextField
           value={email}
@@ -145,16 +158,18 @@ export const SignupPage = () => {
           }}
         />
 
-        <InputLabel id="gender">Gênero</InputLabel>
-        <Select
-          labelId="gender"
-          value={gender}
-          label="Gênero"
-          onChange={(e) => setGender(e.target.value)}
-        >
-          <MenuItem value={"male"}>Masculino</MenuItem>
-          <MenuItem value={"female"}>Feminino</MenuItem>
-        </Select>
+        <FormControl variant="outlined" fullWidth>
+          <InputLabel id="gender-label">Gênero</InputLabel>
+          <Select
+            labelId="gender-label"
+            value={gender}
+            label="Gênero"
+            onChange={(e) => setGender(e.target.value)}
+          >
+            <MenuItem value={"male"}>Masculino</MenuItem>
+            <MenuItem value={"female"}>Feminino</MenuItem>
+          </Select>
+        </FormControl>
 
         <TextField
           value={company}
