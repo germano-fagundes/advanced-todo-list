@@ -59,7 +59,12 @@ export const DrawerMenu = ({ open, drawerWidth, user }) => {
           <ListItemAvatar>
             <Avatar>
               <img
-                className="profile-picture"
+                style={{
+                  width: "40px",
+                  aspectRatio: 1 / 1,
+                  objectFit: "cover",
+                  objectPosition: "center",
+                }}
                 src={user.profile.image}
                 alt="Imagem de perfil"
               />

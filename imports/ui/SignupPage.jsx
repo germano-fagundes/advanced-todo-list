@@ -245,16 +245,36 @@ export const SignupPage = () => {
             }}
           >
             <Box>
-              <label htmlFor="file-upload" className="profile-picture-input">
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "rgba(0, 0, 0, 0.65)",
-                  }}
-                >
-                  Foto de perfil *
-                </Typography>
-              </label>
+              <Box
+                sx={{
+                  width: "fit-content",
+                  border: "1px solid #ccc",
+                  display: "inline-block",
+
+                  textAlign: "left",
+                  margin: 0,
+                  padding: "15px 14px",
+                  borderRadius: "4px",
+                  border: "solid 1px rgba(0, 0, 0, 0.23)",
+                  overflow: "hidden",
+                  minWidth: "0%",
+                  "&:hover": {
+                    borderColor: "rgba(0, 0, 0, 0.87)",
+                    cursor: "pointer",
+                  },
+                }}
+              >
+                <label style={{ cursor: "pointer" }} htmlFor="file-upload">
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: "rgba(0, 0, 0, 0.65)",
+                    }}
+                  >
+                    Foto de perfil *
+                  </Typography>
+                </label>
+              </Box>
               <input
                 id="file-upload"
                 type="file"

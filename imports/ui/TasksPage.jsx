@@ -33,7 +33,7 @@ export const TasksPage = () => {
       <CssBaseline />
       <Box
         sx={{
-          padding: "1rem",
+          padding: 2,
         }}
       >
         <Box
@@ -66,22 +66,29 @@ export const TasksPage = () => {
           </Typography>
         </Box>
         <TaskForm />
-        <FormControlLabel
-          label="Tarefas concluídas"
-          control={
-            <Switch
-              defaultChecked
-              onChange={() => setShowCompleted(!showCompleted)}
-            />
-          }
-        />
-        <Button
-          variant="contained"
-          startIcon={<EditIcon />}
-          onClick={() => navigate("/tasks/edit")}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
         >
-          Editar
-        </Button>
+          <FormControlLabel
+            label="Tarefas concluídas"
+            control={
+              <Switch
+                defaultChecked
+                onChange={() => setShowCompleted(!showCompleted)}
+              />
+            }
+          />
+          <Button
+            variant="contained"
+            startIcon={<EditIcon />}
+            onClick={() => navigate("/tasks/edit")}
+          >
+            Editar
+          </Button>
+        </Box>
       </Box>
       <ToDoList showCompleted={showCompleted} />
     </div>

@@ -155,6 +155,7 @@ export const TaskForm = () => {
                 const IconComponent = iconMap[i];
                 return (
                   <Button
+                    key={i}
                     variant="text"
                     sx={
                       icon == i

@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
-import { Button, MenuItem, TextField } from "@mui/material";
+import { Button, MenuItem, TextField, Box } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 
 const statuses = [
@@ -18,11 +18,23 @@ const statuses = [
   },
 ];
 
-export const TaskEditor = ({ taskId, className, resetEditingTaskId }) => {
+export const TaskEditor = ({ taskId, isBeingEdited, resetEditingTaskId }) => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [status, setStatus] = useState("registered");
   const [date, setDate] = useState("");
+
+  const styles = isBeingEdited
+    ? {
+        transition: "max-height 0.5s ease-in-out, opacity 0.2s ease-in-out",
+        opacity: 1,
+        maxHeight: "999px",
+      }
+    : {
+        maxHeight: 0,
+        opacity: 0,
+        transition: "max-height 0.5s ease-in-out, opacity 0.2s ease-in-out",
+      };
 
   const handleSubmit = (_id) => {
     Meteor.callAsync("tasks.update", {
@@ -37,7 +49,7 @@ export const TaskEditor = ({ taskId, className, resetEditingTaskId }) => {
   };
 
   return (
-    <div className={className}>
+    <Box sx={styles}>
       <TextField
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -85,6 +97,6 @@ export const TaskEditor = ({ taskId, className, resetEditingTaskId }) => {
       >
         Alterar
       </Button>
-    </div>
+    </Box>
   );
 };

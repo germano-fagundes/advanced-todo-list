@@ -174,11 +174,7 @@ export const TasksEditPage = () => {
             </ListItem>
             <TaskEditor
               taskId={task._id}
-              className={
-                task._id === editingTaskId
-                  ? "task-editor active"
-                  : "task-editor"
-              }
+              isBeingEdited={task._id === editingTaskId}
               resetEditingTaskId={resetEditingTaskId}
             />
             <Divider variant="middle" component="li" />

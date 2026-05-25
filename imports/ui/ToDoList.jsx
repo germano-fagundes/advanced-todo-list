@@ -10,6 +10,7 @@ import {
   ListItemText,
   Avatar,
   Divider,
+  Box,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AssignmentIcon from "@mui/icons-material/Assignment";
@@ -62,11 +63,27 @@ export const ToDoList = ({ showCompleted }) => {
   return (
     <List>
       {tasks.map((task) => {
+        const taskStateStyles = task.complete
+          ? {
+              opacity: 0.3,
+              transition: "all 0.2s ease-in-out",
+            }
+          : {
+              opacity: 1,
+              transition: "all 0.2s ease-in-out",
+            };
+        const avatarBg = task.complete ? "grey.300" : "primary.dark";
         const IconComponent = iconMap[task.icon];
         return (
-          <div
+          <Box
             key={task._id}
-            className="task"
+            sx={{
+              cursor: "pointer",
+              transition: "all 0.2s ease-in-out",
+              "&:hover": {
+                backgroundColor: "#fafafa",
+              },
+            }}
             onClick={() => handleToggleTask(task._id)}
           >
             <ListItem
@@ -75,36 +92,32 @@ export const ToDoList = ({ showCompleted }) => {
                   onClick={() => handleDeleteTask(task._id)}
                   edge="end"
                   aria-label="delete"
+                  color="primary"
                 >
                   <DeleteIcon />
                 </IconButton>
               }
             >
-              <ListItemAvatar
-                className={
-                  task.complete ? "task-complete" : "task-not-complete"
-                }
-              >
-                <Avatar>{IconComponent && <IconComponent />}</Avatar>
+              <ListItemAvatar sx={taskStateStyles}>
+                <Avatar
+                  sx={{
+                    backgroundColor: avatarBg,
+                  }}
+                >
+                  {IconComponent && <IconComponent />}
+                </Avatar>
               </ListItemAvatar>
               <ListItemText
-                className={
-                  task.complete ? "task-complete" : "task-not-complete"
-                }
+                sx={taskStateStyles}
                 primary={task.primary}
                 secondary={task.secondary}
               />
             </ListItem>
             {!task.complete ? (
-              <TaskMoreInfo
-                className={
-                  task.complete ? "task-complete" : "task-not-complete"
-                }
-                task={task}
-              />
+              <TaskMoreInfo sx={taskStateStyles} task={task} />
             ) : null}
             <Divider variant="middle" component="li" />
-          </div>
+          </Box>
         );
       })}
     </List>

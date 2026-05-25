@@ -1,5 +1,6 @@
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 export const formatDate = (d) => {
@@ -9,7 +10,7 @@ export const formatDate = (d) => {
   return date.toLocaleDateString();
 };
 
-export default function TaskMoreInfo({ className, task }) {
+export default function TaskMoreInfo({ task }) {
   let situacao;
   switch (task.status) {
     case "registered":
@@ -27,7 +28,7 @@ export default function TaskMoreInfo({ className, task }) {
       break;
   }
   return (
-    <div className={className + " task-more"}>
+    <Box sx={{ padding: "0 0 1rem 1rem" }}>
       <Stack direction="row" spacing={1}>
         <Chip
           label={"Entrega: " + formatDate(task.dueDate)}
@@ -35,9 +36,9 @@ export default function TaskMoreInfo({ className, task }) {
         />
         <Chip label={situacao} variant="outlined" />
       </Stack>
-      <Typography className="task-desc" variant="subtitle2">
+      <Typography variant="subtitle2" sx={{ padding: "0.5rem 0 0 1rem" }}>
         {task.description}
       </Typography>
-    </div>
+    </Box>
   );
 }
