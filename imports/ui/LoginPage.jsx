@@ -11,7 +11,7 @@ export const LoginPage = () => {
         justifyContent: "center",
         alignItems: "center",
         gap: 4,
-        height: "50vh",
+        marginTop: "15vh",
       }}
     >
       <Typography

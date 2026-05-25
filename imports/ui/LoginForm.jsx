@@ -49,15 +49,15 @@ export const LoginForm = () => {
           gap: 1,
         }}
       >
+        <Button variant="text" onClick={() => navigate("/signup")}>
+          Criar conta
+        </Button>
         <Button
           variant="contained"
           endIcon={<ArrowForward />}
           onClick={(e) => submit(e)}
         >
           Entrar
-        </Button>
-        <Button variant="text" onClick={() => navigate("/signup")}>
-          Criar conta
         </Button>
       </Box>
     </Box>

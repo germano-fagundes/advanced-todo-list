@@ -12,6 +12,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import { truncate } from "./TasksEditPage";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -67,7 +68,7 @@ export const DrawerMenu = ({ open, drawerWidth, user }) => {
           </ListItemAvatar>
           <ListItemText
             primary={user.profile.firstName}
-            secondary={user.emails[0].address}
+            secondary={truncate(user.emails[0].address, 15)}
           />
         </ListItem>
       </DrawerHeader>
@@ -87,6 +88,7 @@ export const DrawerMenu = ({ open, drawerWidth, user }) => {
                 ? {
                     marginTop: "auto",
                     marginBottom: 10,
+                    color: "red",
                   }
                 : undefined
             }

@@ -44,7 +44,7 @@ const iconMap = {
   BugReportIcon,
 };
 
-const truncate = (string, max) => {
+export const truncate = (string, max) => {
   if (!string) return "";
   if (string.length <= max) return string;
 
