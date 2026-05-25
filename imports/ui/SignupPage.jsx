@@ -111,7 +111,6 @@ export const SignupPage = () => {
         <Typography
           variant="h3"
           sx={{
-            color: "#1f6f5f",
             fontWeight: "bold",
             textAlign: "center",
           }}

@@ -13,8 +13,14 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import SchoolIcon from "@mui/icons-material/School";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BugReportIcon from "@mui/icons-material/BugReport";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import CategoryIcon from "@mui/icons-material/Category";
+import {
+  Checkbox,
+  Box,
+  TextField,
+  Button,
+  FormControlLabel,
+} from "@mui/material";
 
 const icons = [
   "DeleteIcon",
@@ -28,6 +34,7 @@ const icons = [
   "SchoolIcon",
   "ShoppingCartIcon",
   "BugReportIcon",
+  "CategoryIcon",
 ];
 
 const iconMap = {
@@ -42,6 +49,7 @@ const iconMap = {
   SchoolIcon,
   ShoppingCartIcon,
   BugReportIcon,
+  CategoryIcon,
 };
 
 export const TaskForm = () => {
@@ -50,11 +58,17 @@ export const TaskForm = () => {
   const [taskDueDate, setTaskDueDate] = useState("");
   const [taskPersonal, setTaskPersonal] = useState(false);
   const [icon, setIcon] = useState("");
+  const [showIcons, setShowIcons] = useState(false);
   const user = useTracker(() => Meteor.user());
 
   const iconButtonHandler = (e, i) => {
     e.preventDefault();
     setIcon(i);
+    setShowIcons(!showIcons);
+  };
+
+  const handleToggleIcons = () => {
+    setShowIcons(!showIcons);
   };
 
   const handleSubmit = (e) => {
@@ -77,52 +91,139 @@ export const TaskForm = () => {
 
   return (
     <div>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <button>Ícones</button>
-        <div className="icons">
-          {icons.map((i) => {
-            const IconComponent = iconMap[i];
-            return (
-              <button key={i} onClick={(e) => iconButtonHandler(e, i)}>
-                {IconComponent && <IconComponent />}
-              </button>
-            );
-          })}
-        </div>
-
-        <input
-          type="text"
-          placeholder="Nome"
-          value={taskName}
-          onChange={(e) => setTaskName(e.target.value)}
-        />
-
-        <input
-          type="text"
-          placeholder="Descrição"
-          value={taskDesc}
-          onChange={(e) => setTaskDesc(e.target.value)}
-        />
-
-        <input
-          type="date"
-          placeholder="Data de entrega"
-          value={taskDueDate}
-          onChange={(e) => setTaskDueDate(e.target.value)}
-        />
-
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={taskPersonal}
-              onChange={(e) => setTaskPersonal(e.target.checked)}
-            />
-          }
-          label="Pessoal"
-        />
-
-        <button type="submit">Adicionar</button>
-      </form>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Box
+          component="form"
+          sx={{
+            display: "flex",
+            gap: 2,
+            alignItems: "center",
+            position: "relative",
+            marginBottom: 4,
+            width: "min(1500px, 95vw)",
+            flexWrap: "wrap",
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <Button
+            variant="contained"
+            sx={{ width: "fit-content", height: "fit-content" }}
+            onClick={() => setShowIcons(!showIcons)}
+          >
+            <CategoryIcon />
+          </Button>
+          <Box
+            sx={
+              showIcons
+                ? {
+                    display: "block",
+                    position: "absolute",
+                    top: "calc(100% + .5rem)",
+                    left: 0,
+                    zIndex: 2,
+                  }
+                : {
+                    display: "none",
+                  }
+            }
+          >
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "auto auto auto",
+                gap: 1,
+                padding: 1,
+                width: "fit-content",
+                backgroundColor: "white",
+                borderRadius: "8px",
+                boxShadow:
+                  "0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);",
+                transition: "all .2s ease-in-out",
+                "&:hover": {
+                  boxShadow:
+                    "0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)",
+                },
+              }}
+            >
+              {icons.map((i) => {
+                const IconComponent = iconMap[i];
+                return (
+                  <Button
+                    variant="text"
+                    sx={
+                      icon == i
+                        ? {
+                            border: "1px solid #2fa084",
+                          }
+                        : {
+                            border: "1px solid rgba(0, 0, 0, 0)",
+                          }
+                    }
+                    onClick={(e) => iconButtonHandler(e, i)}
+                  >
+                    {IconComponent && <IconComponent />}
+                  </Button>
+                );
+              })}
+            </Box>
+          </Box>
+          <TextField
+            value={taskName}
+            onChange={(e) => setTaskName(e.target.value)}
+            required
+            label="Título"
+            variant="outlined"
+            sx={{
+              flex: 1,
+              minWidth: "250px",
+            }}
+          />
+          <TextField
+            value={taskDesc}
+            onChange={(e) => setTaskDesc(e.target.value)}
+            required
+            label="Descrição"
+            variant="outlined"
+            sx={{
+              flex: 1,
+              minWidth: "250px",
+            }}
+          />
+          <TextField
+            value={taskDueDate}
+            onChange={(e) => setTaskDueDate(e.target.value)}
+            required
+            type="date"
+            label="Data de entrega"
+            variant="outlined"
+            slotProps={{
+              inputLabel: { shrink: true },
+            }}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={taskPersonal}
+                onChange={(e) => setTaskPersonal(e.target.checked)}
+              />
+            }
+            label="Pessoal"
+          />
+          <Button
+            variant="contained"
+            onClick={(e) => handleSubmit(e)}
+            sx={{ height: "fit-content" }}
+          >
+            Adicionar
+          </Button>
+        </Box>
+      </Box>
     </div>
   );
 };

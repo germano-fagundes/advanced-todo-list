@@ -13,6 +13,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 const theme = createTheme({
   typography: {
     fontFamily: '"Stack Sans Text", sans-serif',
+    h1: { color: "#1f6f5f" },
+    h2: { color: "#1f6f5f" },
+    h3: { color: "#1f6f5f" },
+    h4: { color: "#1f6f5f" },
   },
   palette: {
     primary: {

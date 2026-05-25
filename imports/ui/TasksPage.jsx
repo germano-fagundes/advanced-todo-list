@@ -7,7 +7,10 @@ import {
   CssBaseline,
   FormControlLabel,
   Button,
+  Box,
+  Typography,
 } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditIcon from "@mui/icons-material/Edit";
 import { Fragment, useState } from "react";
 import { ToDoList } from "./ToDoList";
@@ -28,24 +31,58 @@ export const TasksPage = () => {
   return (
     <div>
       <CssBaseline />
-      <Link to="/">Página inicial</Link>
-      <TaskForm />
-      <FormControlLabel
-        label="Tarefas concluídas"
-        control={
-          <Switch
-            defaultChecked
-            onChange={() => setShowCompleted(!showCompleted)}
-          />
-        }
-      />
-      <Button
-        variant="contained"
-        startIcon={<EditIcon />}
-        onClick={() => navigate("/tasks/edit")}
+      <Box
+        sx={{
+          padding: "1rem",
+        }}
       >
-        Editar
-      </Button>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr 1fr",
+            alignItems: "center",
+            gap: 2,
+            marginBottom: 4,
+          }}
+        >
+          <Button
+            variant="text"
+            startIcon={<ArrowBackIcon />}
+            onClick={() => navigate("/")}
+            sx={{
+              justifySelf: "flex-start",
+            }}
+          >
+            Página inicial
+          </Button>
+          <Typography
+            variant="h4"
+            sx={{
+              justifySelf: "center",
+              textAlign: "center",
+            }}
+          >
+            Suas tarefas
+          </Typography>
+        </Box>
+        <TaskForm />
+        <FormControlLabel
+          label="Tarefas concluídas"
+          control={
+            <Switch
+              defaultChecked
+              onChange={() => setShowCompleted(!showCompleted)}
+            />
+          }
+        />
+        <Button
+          variant="contained"
+          startIcon={<EditIcon />}
+          onClick={() => navigate("/tasks/edit")}
+        >
+          Editar
+        </Button>
+      </Box>
       <ToDoList showCompleted={showCompleted} />
     </div>
   );

@@ -12,6 +12,8 @@ body {
   color: var(--text) !important;
 }
 
+/* SignupPage */
+
 input[type="file"] {
   display: none;
 }
@@ -31,7 +33,6 @@ input[type="file"] {
   overflow: hidden;
   min-width: 0%;
   border-color: rgba(0, 0, 0, 0.23);
-  /* transition: all 0.2s ease-in-out; */
 }
 
 .profile-picture-input:hover {
@@ -39,12 +40,16 @@ input[type="file"] {
   cursor: pointer;
 }
 
+/* App */
+
 .profile-picture {
   width: 40px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: center;
 }
+
+/* ToDoList */
 
 .task {
   cursor: pointer;
