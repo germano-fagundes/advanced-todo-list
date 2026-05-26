@@ -116,8 +116,6 @@ export const TaskEditor = ({ taskId, isBeingEdited, resetEditingTaskId }) => {
         onClick={() => handleSubmit(taskId)}
         sx={{
           marginTop: { xs: 2, md: 0 },
-          width: "fit-content",
-          alignSelf: "center",
         }}
       >
         Alterar

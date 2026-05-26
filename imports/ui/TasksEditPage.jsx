@@ -137,6 +137,7 @@ export const TasksEditPage = () => {
       <Box
         sx={{
           padding: 2,
+          paddingBottom: 0,
         }}
       >
         <Button
@@ -146,76 +147,76 @@ export const TasksEditPage = () => {
         >
           Página inicial
         </Button>
-        <List>
-          {tasks.map((task) => {
-            const IconComponent = iconMap[task.icon];
-            return (
-              <Box key={task._id}>
-                <ListItem
-                  secondaryAction={
-                    <Box>
-                      <Button
-                        onClick={() => handleNextStatus(task._id)}
-                        variant="outlined"
-                        endIcon={<ArrowForwardIcon />}
-                        sx={{
-                          display: { xs: "none", md: "inline-flex" },
-                        }}
-                      >
-                        Situação
-                      </Button>
-                      <IconButton
-                        onClick={() => handleToggleEditTask(task._id)}
-                        edge="end"
-                        aria-label="edit"
-                      >
-                        {task._id === editingTaskId ? (
-                          <CloseIcon />
-                        ) : (
-                          <EditIcon />
-                        )}
-                      </IconButton>
-                      <IconButton
-                        onClick={() => handleDeleteTask(task._id)}
-                        edge="end"
-                        aria-label="delete"
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Box>
-                  }
-                >
-                  <ListItemAvatar>
-                    <Avatar
+      </Box>
+      <List>
+        {tasks.map((task) => {
+          const IconComponent = iconMap[task.icon];
+          return (
+            <Box key={task._id}>
+              <ListItem
+                secondaryAction={
+                  <Box>
+                    <Button
+                      onClick={() => handleNextStatus(task._id)}
+                      variant="outlined"
+                      endIcon={<ArrowForwardIcon />}
                       sx={{
-                        backgroundColor: "primary.dark",
+                        display: { xs: "none", md: "inline-flex" },
                       }}
                     >
-                      {IconComponent && <IconComponent />}
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={task.primary}
-                    secondary={
-                      <span>
-                        {task.secondary},{" "}
-                        <em>{truncate(task.description, 10)}</em>,{" "}
-                        {statusMap(task.status)}, {formatDate(task.dueDate)}
-                      </span>
-                    }
-                  />
-                </ListItem>
-                <TaskEditor
-                  taskId={task._id}
-                  isBeingEdited={task._id === editingTaskId}
-                  resetEditingTaskId={resetEditingTaskId}
+                      Situação
+                    </Button>
+                    <IconButton
+                      onClick={() => handleToggleEditTask(task._id)}
+                      edge="end"
+                      aria-label="edit"
+                    >
+                      {task._id === editingTaskId ? (
+                        <CloseIcon />
+                      ) : (
+                        <EditIcon />
+                      )}
+                    </IconButton>
+                    <IconButton
+                      onClick={() => handleDeleteTask(task._id)}
+                      edge="end"
+                      aria-label="delete"
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Box>
+                }
+              >
+                <ListItemAvatar>
+                  <Avatar
+                    sx={{
+                      backgroundColor: "primary.dark",
+                    }}
+                  >
+                    {IconComponent && <IconComponent />}
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary={task.primary}
+                  secondary={
+                    <span>
+                      {task.secondary},{" "}
+                      <em>{truncate(task.description, 10)}</em>,{" "}
+                      {statusMap(task.status)}, {formatDate(task.dueDate)}
+                    </span>
+                  }
                 />
-                <Divider variant="middle" component="li" />
-              </Box>
-            );
-          })}
-        </List>
-      </Box>
+              </ListItem>
+              <TaskEditor
+                taskId={task._id}
+                isBeingEdited={task._id === editingTaskId}
+                resetEditingTaskId={resetEditingTaskId}
+              />
+              <Divider variant="middle" component="li" />
+            </Box>
+          );
+        })}
+      </List>
     </Box>
   );
 };

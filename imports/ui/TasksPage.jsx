@@ -38,7 +38,8 @@ export const TasksPage = () => {
       >
         <Box
           sx={{
-            display: "grid",
+            display: { xs: "flex", sm: "grid" },
+            flexDirection: "column",
             gridTemplateColumns: "1fr 1fr 1fr",
             alignItems: "center",
             gap: 2,
@@ -51,6 +52,7 @@ export const TasksPage = () => {
             onClick={() => navigate("/")}
             sx={{
               justifySelf: "flex-start",
+              alignSelf: "flex-start",
             }}
           >
             Página inicial

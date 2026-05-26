@@ -101,8 +101,9 @@ export const TaskForm = () => {
           component="form"
           sx={{
             display: "flex",
+            flexDirection: { xs: "column", md: "row" },
             gap: 2,
-            alignItems: "center",
+            alignItems: { xs: "strech", md: "center" },
             position: "relative",
             marginBottom: 4,
             width: "min(1500px, 95vw)",
@@ -181,7 +182,6 @@ export const TaskForm = () => {
             label="Título"
             variant="outlined"
             sx={{
-              flex: 1,
               minWidth: "250px",
             }}
           />
