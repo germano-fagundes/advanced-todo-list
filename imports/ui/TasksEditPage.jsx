@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { TasksCollection } from "../api/TasksCollection";
 import { useSubscribe, useTracker } from "meteor/react-meteor-data";
+import { useNavigate } from "react-router-dom";
 import {
+  CssBaseline,
   styled,
   List,
   ListItem,
@@ -11,6 +13,7 @@ import {
   Avatar,
   Divider,
   Button,
+  Box,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -26,6 +29,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BugReportIcon from "@mui/icons-material/BugReport";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { TaskEditor } from "./TaskEditor";
 import { Meteor } from "meteor/meteor";
 import { formatDate } from "./TaskMoreInfo";
@@ -72,6 +76,7 @@ const statusMap = (status) => {
 export const TasksEditPage = () => {
   const [editingTaskId, setEditingTaskId] = useState(null);
   const isLoading = useSubscribe("tasks.edit");
+  const navigate = useNavigate();
   const tasks = useTracker(() =>
     TasksCollection.find(
       {},
@@ -124,63 +129,93 @@ export const TasksEditPage = () => {
     });
   };
 
-  if (isLoading()) return <div>Loading...</div>;
+  if (isLoading()) return <Box>Loading...</Box>;
 
   return (
-    <List>
-      {tasks.map((task) => {
-        const IconComponent = iconMap[task.icon];
-        return (
-          <div key={task._id}>
-            <ListItem
-              secondaryAction={
-                <div>
-                  <Button
-                    onClick={() => handleNextStatus(task._id)}
-                    variant="outlined"
-                    endIcon={<ArrowForwardIcon />}
-                  >
-                    Situação
-                  </Button>
-                  <IconButton
-                    onClick={() => handleToggleEditTask(task._id)}
-                    edge="end"
-                    aria-label="edit"
-                  >
-                    {task._id === editingTaskId ? <CloseIcon /> : <EditIcon />}
-                  </IconButton>
-                  <IconButton
-                    onClick={() => handleDeleteTask(task._id)}
-                    edge="end"
-                    aria-label="delete"
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </div>
-              }
-            >
-              <ListItemAvatar>
-                <Avatar>{IconComponent && <IconComponent />}</Avatar>
-              </ListItemAvatar>
-              <ListItemText
-                primary={task.primary}
-                secondary={
-                  <span>
-                    {task.secondary}, <em>{truncate(task.description, 10)}</em>,{" "}
-                    {statusMap(task.status)}, {formatDate(task.dueDate)}
-                  </span>
-                }
-              />
-            </ListItem>
-            <TaskEditor
-              taskId={task._id}
-              isBeingEdited={task._id === editingTaskId}
-              resetEditingTaskId={resetEditingTaskId}
-            />
-            <Divider variant="middle" component="li" />
-          </div>
-        );
-      })}
-    </List>
+    <Box>
+      <CssBaseline />
+      <Box
+        sx={{
+          padding: 2,
+        }}
+      >
+        <Button
+          variant="text"
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate("/tasks")}
+        >
+          Página inicial
+        </Button>
+        <List>
+          {tasks.map((task) => {
+            const IconComponent = iconMap[task.icon];
+            return (
+              <Box key={task._id}>
+                <ListItem
+                  secondaryAction={
+                    <Box>
+                      <Button
+                        onClick={() => handleNextStatus(task._id)}
+                        variant="outlined"
+                        endIcon={<ArrowForwardIcon />}
+                        sx={{
+                          display: { xs: "none", md: "inline-flex" },
+                        }}
+                      >
+                        Situação
+                      </Button>
+                      <IconButton
+                        onClick={() => handleToggleEditTask(task._id)}
+                        edge="end"
+                        aria-label="edit"
+                      >
+                        {task._id === editingTaskId ? (
+                          <CloseIcon />
+                        ) : (
+                          <EditIcon />
+                        )}
+                      </IconButton>
+                      <IconButton
+                        onClick={() => handleDeleteTask(task._id)}
+                        edge="end"
+                        aria-label="delete"
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Box>
+                  }
+                >
+                  <ListItemAvatar>
+                    <Avatar
+                      sx={{
+                        backgroundColor: "primary.dark",
+                      }}
+                    >
+                      {IconComponent && <IconComponent />}
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={task.primary}
+                    secondary={
+                      <span>
+                        {task.secondary},{" "}
+                        <em>{truncate(task.description, 10)}</em>,{" "}
+                        {statusMap(task.status)}, {formatDate(task.dueDate)}
+                      </span>
+                    }
+                  />
+                </ListItem>
+                <TaskEditor
+                  taskId={task._id}
+                  isBeingEdited={task._id === editingTaskId}
+                  resetEditingTaskId={resetEditingTaskId}
+                />
+                <Divider variant="middle" component="li" />
+              </Box>
+            );
+          })}
+        </List>
+      </Box>
+    </Box>
   );
 };

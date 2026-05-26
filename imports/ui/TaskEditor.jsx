@@ -24,16 +24,33 @@ export const TaskEditor = ({ taskId, isBeingEdited, resetEditingTaskId }) => {
   const [status, setStatus] = useState("registered");
   const [date, setDate] = useState("");
 
-  const styles = isBeingEdited
+  const containerStyles = isBeingEdited
     ? {
         transition: "max-height 0.5s ease-in-out, opacity 0.2s ease-in-out",
         opacity: 1,
         maxHeight: "999px",
+
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        alignItems: { xs: "stretch", md: "center" },
+        gap: { xs: 0, md: 2 },
+        marginBottom: 2,
+        padding: "0 1rem",
+        flexWrap: "wrap",
       }
     : {
         maxHeight: 0,
         opacity: 0,
-        transition: "max-height 0.5s ease-in-out, opacity 0.2s ease-in-out",
+        transition:
+          "margin-bottom 0s ease-in-out, max-height 0.5s ease-in-out, opacity 0.2s ease-in-out",
+
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        alignItems: { xs: "stretch", md: "center" },
+        gap: 2,
+        marginBottom: 0,
+        padding: "0 1rem",
+        flexWrap: "wrap",
       };
 
   const handleSubmit = (_id) => {
@@ -49,7 +66,7 @@ export const TaskEditor = ({ taskId, isBeingEdited, resetEditingTaskId }) => {
   };
 
   return (
-    <Box sx={styles}>
+    <Box sx={containerStyles}>
       <TextField
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -64,6 +81,9 @@ export const TaskEditor = ({ taskId, isBeingEdited, resetEditingTaskId }) => {
         label="Descrição"
         multiline
         variant="outlined"
+        sx={{
+          flex: 1,
+        }}
       />
       <TextField
         onChange={(e) => setStatus(e.target.value)}
@@ -94,6 +114,11 @@ export const TaskEditor = ({ taskId, isBeingEdited, resetEditingTaskId }) => {
         variant="contained"
         startIcon={<CheckIcon />}
         onClick={() => handleSubmit(taskId)}
+        sx={{
+          marginTop: { xs: 2, md: 0 },
+          width: "fit-content",
+          alignSelf: "center",
+        }}
       >
         Alterar
       </Button>
