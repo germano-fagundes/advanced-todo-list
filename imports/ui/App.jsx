@@ -11,38 +11,15 @@ import { TasksPage } from "./TasksPage";
 import { DrawerMenu } from "./DrawerMenu";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import MenuIcon from "@mui/icons-material/Menu";
 import { Typography } from "@mui/material";
 import { Dashboard } from "./Dashboard";
 
 const drawerWidth = 240;
 
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(2),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    variants: [
-      {
-        props: ({ open }) => open,
-        style: {
-          transition: theme.transitions.create("margin", {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-          }),
-          marginLeft: 0,
-        },
-      },
-    ],
-  }),
-);
-
 export const App = () => {
   const user = useTracker(() => Meteor.user());
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const theme = useTheme();
 
   const handleToggleDrawer = () => setOpen(!open);
@@ -52,19 +29,19 @@ export const App = () => {
       <CssBaseline />
       {user ? (
         <Fragment>
-          <Box sx={{ display: "flex" }}>
+          <Box>
             <DrawerMenu
               open={open}
               drawerWidth={drawerWidth}
               handleToggleDrawer={handleToggleDrawer}
               user={user}
             />
-            <Main
-              open={open}
+            <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 gap: 3,
+                padding: 2,
               }}
             >
               <Box
@@ -72,10 +49,11 @@ export const App = () => {
                   display: "flex",
                   gap: 1,
                   alignItems: "center",
+                  width: "100%",
                 }}
               >
                 <IconButton onClick={handleToggleDrawer}>
-                  {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                  <MenuIcon />
                 </IconButton>
                 {user.profile.gender == "male" ? (
                   <Typography variant="h5">
@@ -88,7 +66,7 @@ export const App = () => {
                 )}
               </Box>
               <Dashboard />
-            </Main>
+            </Box>
           </Box>
         </Fragment>
       ) : (

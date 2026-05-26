@@ -60,6 +60,7 @@ export const Dashboard = () => {
     <Box
       sx={{
         display: "flex",
+        flexDirection: { xs: "column", sm: "row" },
         gap: 2,
       }}
     >
@@ -68,7 +69,6 @@ export const Dashboard = () => {
           key={card.title}
           sx={{
             flex: 1,
-            maxWidth: "500px",
           }}
         >
           <CardActionArea

@@ -22,7 +22,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-export const DrawerMenu = ({ open, drawerWidth, user }) => {
+export const DrawerMenu = ({ open, drawerWidth, user, handleToggleDrawer }) => {
   const navigate = useNavigate();
   const buttons = [
     {
@@ -50,9 +50,10 @@ export const DrawerMenu = ({ open, drawerWidth, user }) => {
           boxSizing: "border-box",
         },
       }}
-      variant="persistent"
+      variant="temporary"
       anchor="left"
       open={open}
+      onClose={handleToggleDrawer}
     >
       <DrawerHeader>
         <ListItem>
@@ -98,10 +99,12 @@ export const DrawerMenu = ({ open, drawerWidth, user }) => {
             }
           >
             <ListItemButton onClick={btn.action}>
-              <ListItemIcon>
-                {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
-              </ListItemIcon>
-              <ListItemText primary={btn.text} />
+              <ListItemText
+                primary={btn.text}
+                sx={{
+                  paddingLeft: 2,
+                }}
+              />
             </ListItemButton>
           </ListItem>
         ))}
