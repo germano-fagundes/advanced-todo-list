@@ -47,7 +47,13 @@ export const TasksPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+      }}
+    >
       <CssBaseline />
       <Box
         sx={{
@@ -130,6 +136,6 @@ export const TasksPage = () => {
         </Box>
       </Box>
       {isLoading() ? <div>Loading...</div> : <ToDoList tasks={tasks} />}
-    </div>
+    </Box>
   );
 };

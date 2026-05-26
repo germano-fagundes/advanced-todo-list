@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import {
   styled,
   List,
@@ -9,6 +9,7 @@ import {
   Avatar,
   Divider,
   Box,
+  Pagination,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AssignmentIcon from "@mui/icons-material/Assignment";
@@ -39,6 +40,8 @@ const iconMap = {
 };
 
 export const ToDoList = ({ tasks }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
   const handleDeleteTask = (_id) => {
     Meteor.callAsync("tasks.delete", { _id });
   };
@@ -47,70 +50,97 @@ export const ToDoList = ({ tasks }) => {
     Meteor.callAsync("tasks.toggle", { _id });
   };
 
+  const pagCount = Math.ceil(tasks.length / 4);
+
+  const visibleTasks = useMemo(() => {
+    const start = (currentPage - 1) * 4;
+    const end = start + 4;
+    return tasks.slice(start, end);
+  }, [tasks, currentPage]);
+
   return (
-    <List
+    <Box
       sx={{
-        paddingTop: 0,
+        paddingBottom: 4,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: "100%",
       }}
     >
-      {tasks.map((task) => {
-        const taskStateStyles = task.complete
-          ? {
-              opacity: 0.3,
-              transition: "all 0.2s ease-in-out",
-            }
-          : {
-              opacity: 1,
-              transition: "all 0.2s ease-in-out",
-            };
-        const avatarBg = task.complete ? "grey.300" : "primary.dark";
-        const IconComponent = iconMap[task.icon];
-        return (
-          <Box
-            key={task._id}
-            sx={{
-              cursor: "pointer",
-              transition: "all 0.2s ease-in-out",
-              "&:hover": {
-                backgroundColor: "#fafafa",
-              },
-            }}
-            onClick={() => handleToggleTask(task._id)}
-          >
-            <ListItem
-              secondaryAction={
-                <IconButton
-                  onClick={() => handleDeleteTask(task._id)}
-                  edge="end"
-                  aria-label="delete"
-                  color="primary"
-                >
-                  <DeleteIcon />
-                </IconButton>
+      <List
+        sx={{
+          paddingTop: 0,
+        }}
+      >
+        {visibleTasks.map((task) => {
+          const taskStateStyles = task.complete
+            ? {
+                opacity: 0.3,
+                transition: "all 0.2s ease-in-out",
               }
+            : {
+                opacity: 1,
+                transition: "all 0.2s ease-in-out",
+              };
+          const avatarBg = task.complete ? "grey.300" : "primary.dark";
+          const IconComponent = iconMap[task.icon];
+          return (
+            <Box
+              key={task._id}
+              sx={{
+                cursor: "pointer",
+                transition: "all 0.2s ease-in-out",
+                "&:hover": {
+                  backgroundColor: "#fafafa",
+                },
+              }}
+              onClick={() => handleToggleTask(task._id)}
             >
-              <ListItemAvatar sx={taskStateStyles}>
-                <Avatar
-                  sx={{
-                    backgroundColor: avatarBg,
-                  }}
-                >
-                  {IconComponent && <IconComponent />}
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText
-                sx={taskStateStyles}
-                primary={task.primary}
-                secondary={task.secondary}
-              />
-            </ListItem>
-            {!task.complete ? (
-              <TaskMoreInfo sx={taskStateStyles} task={task} />
-            ) : null}
-            <Divider variant="middle" component="li" />
-          </Box>
-        );
-      })}
-    </List>
+              <ListItem
+                secondaryAction={
+                  <IconButton
+                    onClick={() => handleDeleteTask(task._id)}
+                    edge="end"
+                    aria-label="delete"
+                    color="primary"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                }
+              >
+                <ListItemAvatar sx={taskStateStyles}>
+                  <Avatar
+                    sx={{
+                      backgroundColor: avatarBg,
+                    }}
+                  >
+                    {IconComponent && <IconComponent />}
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  sx={taskStateStyles}
+                  primary={task.primary}
+                  secondary={task.secondary}
+                />
+              </ListItem>
+              {!task.complete ? (
+                <TaskMoreInfo sx={taskStateStyles} task={task} />
+              ) : null}
+              <Divider variant="middle" component="li" />
+            </Box>
+          );
+        })}
+      </List>
+      <Pagination
+        count={pagCount}
+        page={currentPage}
+        onChange={(_, value) => setCurrentPage(value)}
+        color="primary"
+        sx={{
+          alignSelf: "center",
+        }}
+      />
+    </Box>
   );
 };
