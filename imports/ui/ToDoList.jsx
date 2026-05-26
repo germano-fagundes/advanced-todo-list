@@ -1,6 +1,4 @@
 import React from "react";
-import { TasksCollection } from "../api/TasksCollection";
-import { useSubscribe, useTracker } from "meteor/react-meteor-data";
 import {
   styled,
   List,
@@ -40,16 +38,7 @@ const iconMap = {
   BugReportIcon,
 };
 
-export const ToDoList = ({ showCompleted }) => {
-  const isLoading = useSubscribe("tasks");
-
-  const hideCompletedFilter = { complete: { $ne: true } };
-  const tasks = useTracker(() =>
-    TasksCollection.find(showCompleted ? {} : hideCompletedFilter, {
-      sort: { createdAt: -1 },
-    }).fetch(),
-  );
-
+export const ToDoList = ({ tasks }) => {
   const handleDeleteTask = (_id) => {
     Meteor.callAsync("tasks.delete", { _id });
   };
@@ -58,10 +47,12 @@ export const ToDoList = ({ showCompleted }) => {
     Meteor.callAsync("tasks.toggle", { _id });
   };
 
-  if (isLoading()) return <div>Loading...</div>;
-
   return (
-    <List>
+    <List
+      sx={{
+        paddingTop: 0,
+      }}
+    >
       {tasks.map((task) => {
         const taskStateStyles = task.complete
           ? {

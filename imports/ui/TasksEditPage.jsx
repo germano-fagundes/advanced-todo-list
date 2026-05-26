@@ -145,7 +145,7 @@ export const TasksEditPage = () => {
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate("/tasks")}
         >
-          Página inicial
+          Tarefas
         </Button>
       </Box>
       <List>
